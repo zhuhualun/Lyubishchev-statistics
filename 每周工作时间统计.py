@@ -113,6 +113,8 @@ def sum_dict(a,b):
 入口
 """
 if __name__ == '__main__':
+    cost_lst = get_cost(data_i)[0]
+    item_lst = get_cost(data_i)[1]
     # 计算大项
     dic = {}    
     for i in cost_lst:
