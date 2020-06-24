@@ -6,7 +6,6 @@ Created on Thu Jun 18 22:28:40 2020
 """
 
 import os
-os.chdir('D:\\python')
 import time
 import datetime
 import pandas as pd
@@ -14,6 +13,7 @@ import numpy as np
 from collections import defaultdict
 import matplotlib as plt
 import matplotlib.pyplot as plt
+print("请把excel文件放在%s下"%os.getcwd())
 
 data = pd.read_excel('每日工作计时.xlsx')
 data['日期'] = data['日期'].fillna(method='ffill')
@@ -138,16 +138,31 @@ if __name__ == '__main__':
     e_tm_year = date2.timetuple()[0]
     e_tm_mon = date2.timetuple()[1]
     e_tm_day = date2.timetuple()[2]
+    
+    # 文件名和路径
+    filedate1 = F"\\周报大项{b_tm_year}年{b_tm_mon}月{b_tm_day}日_{e_tm_mon}月{e_tm_day}日"
+    filedate2 = F"\\周报小项{b_tm_year}年{b_tm_mon}月{b_tm_day}日_{e_tm_mon}月{e_tm_day}日"
+    foldername = "柳比歇夫工作法"
+    if not os.path.exists(foldername):
+        os.makedirs(foldername)
+    filepath = os.getcwd() + "\\" + foldername
+    filename1 = filepath + filedate1
+    filename2 = filepath + filedate2
+
     # 900*500像素
     plt.rcParams['figure.figsize'] = (9.0,5.0)
     plt.rcParams['savefig.dpi'] = 100
-    cost_df.plot(kind='bar')
-    plt.savefig(F"周报大项{b_tm_year}年{b_tm_mon}月{b_tm_day}日_{e_tm_mon}月{e_tm_day}日.png")
+    cost_df.plot(kind='barh')
+    plt.savefig("%s.png"%filename1)
+    plt.show()
     
     plt.rcParams['figure.figsize'] = (9.0,5.0)
     plt.rcParams['savefig.dpi'] = 100
-    item_df.plot(kind='bar')
-    plt.savefig(F"周报小项{b_tm_year}年{b_tm_mon}月{b_tm_day}日_{e_tm_mon}月{e_tm_day}日.png")
+    item_df.plot(kind='barh')
+    plt.savefig("%s.png"%filename2)
+    plt.show()
+
+    print("文件已保存在%s"%filepath)
     
 """
 个人微信公众号：《纸箱之神》，不定期分享关于自律、自我管理、互联网运营等知识，欢迎关注。
